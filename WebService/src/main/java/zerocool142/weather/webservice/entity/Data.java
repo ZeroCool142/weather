@@ -2,6 +2,7 @@ package zerocool142.weather.webservice.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Data {
@@ -12,6 +13,7 @@ public class Data {
     private Double temp;
     private Integer preassure;
     private Integer humidity;
+    private Date date;
 
     public Data(){}
 
@@ -45,5 +47,13 @@ public class Data {
 
     public void setHumidity(Integer humidity) {
         this.humidity = humidity;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
