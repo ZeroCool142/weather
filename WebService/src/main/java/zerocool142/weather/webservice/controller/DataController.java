@@ -14,12 +14,13 @@ import java.util.Calendar;
 import java.util.List;
 
 @RestController
-public class MainController {
+@RequestMapping(path = "/data")
+public class DataController {
 
     @Autowired
-    DataService dataService;
+    private DataService dataService;
     @Autowired
-    SensorService sensorService;
+    private SensorService sensorService;
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
@@ -30,19 +31,25 @@ public class MainController {
     @RequestMapping(path = "/{sensorId}", method = RequestMethod.GET)
     public ResponseEntity<?> infoBySensor(@PathVariable Integer sensorId) {
         List<Data> dataList = dataService.findBySensorId(sensorId);
+
         if (dataList == null || dataList.size()==0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ErrorResponse("Sensor not found!"));
+
         return ResponseEntity.ok(dataList);
     }
 
-    @RequestMapping(path = "/data/add/{sensorId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/add/{sensorId}", method = RequestMethod.POST)
     public ResponseEntity<?> add(@RequestBody Data data,
                                  @PathVariable Integer sensorId){
+
         Sensor s = sensorService.findOne(sensorId);
+
         if (s==null) return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse("Sensor not found!"));
+
         data.setSensor(s);
+
         if (data.getDate() == null) data.setDate(Calendar.getInstance().getTime());
         return ResponseEntity.ok(dataService.save(data));
     }
