@@ -68,7 +68,7 @@ public class Data {
         return sensor;
     }
 
-    public void setSensor(Sensor sensorId) {
-        this.sensor = sensorId;
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
     }
 }
